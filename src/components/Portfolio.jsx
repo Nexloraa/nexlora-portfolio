@@ -9,7 +9,7 @@ export default function Portfolio() {
     <section id="work" className="py-20 text-white px-6">
       <h2 className="text-4xl font-bold text-center mb-12">Our Work</h2>
 
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+      <div className="max-w-6xl mx-auto space-y-16">
         {projects.map((item, index) => (
           <motion.div
             key={index}
@@ -17,24 +17,32 @@ export default function Portfolio() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="bg-gray-900 p-5 rounded-xl shadow-lg"
+            className="bg-gray-900 p-6 rounded-xl shadow-lg"
           >
-            <img
-              src={item.images[0]}
-              alt={item.title}
-              className="w-full rounded-lg cursor-pointer hover:opacity-80 transition"
-              onClick={() => setSelectedImage(item.images[0])}
-            />
+            <h3 className="text-2xl font-semibold mb-3">{item.title}</h3>
+            <p className="text-gray-300 mb-4">{item.description}</p>
 
-            <h3 className="text-xl font-semibold mt-4">{item.title}</h3>
-            <p className="text-gray-300 mt-2">{item.description}</p>
+            {/* ---- ALL IMAGES GRID ---- */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+              {item.images.map((img, i) => (
+                <img
+                  key={i}
+                  src={img}
+                  alt={`${item.title} screenshot ${i + 1}`}
+                  className="w-full rounded-lg cursor-pointer hover:opacity-80 transition"
+                  onClick={() => setSelectedImage(img)}
+                />
+              ))}
+            </div>
 
+            {/* GitHub button */}
             <a
               href={item.github}
               target="_blank"
-              className="inline-block mt-4 text-blue-400 hover:underline"
+              rel="noopener noreferrer"
+              className="inline-block bg-blue-600 px-5 py-2 rounded text-white hover:bg-blue-700"
             >
-              View on GitHub →
+              View on GitHub
             </a>
           </motion.div>
         ))}
