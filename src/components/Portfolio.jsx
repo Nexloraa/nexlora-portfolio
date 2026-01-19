@@ -1,64 +1,58 @@
+import { useState } from "react";
 import { projects } from "../data/projects";
+import { motion } from "framer-motion";
 
 export default function Portfolio() {
+  const [selectedImage, setSelectedImage] = useState(null);
+
   return (
-    <section id="work" className="py-20 bg-gray-950 text-white px-6">
+    <section id="work" className="py-20 text-white px-6">
       <h2 className="text-4xl font-bold text-center mb-12">Our Work</h2>
 
-      <div className="max-w-6xl mx-auto space-y-16">
-        {projects.map((item) => (
-          <div key={item.title} className="border border-gray-700 p-6 rounded-lg">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+        {projects.map((item, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="bg-gray-900 p-5 rounded-xl shadow-lg"
+          >
+            <img
+              src={item.images[0]}
+              alt={item.title}
+              className="w-full rounded-lg cursor-pointer hover:opacity-80 transition"
+              onClick={() => setSelectedImage(item.images[0])}
+            />
 
-            {/* Title */}
-            <h3 className="text-2xl font-semibold mb-4">{item.title}</h3>
+            <h3 className="text-xl font-semibold mt-4">{item.title}</h3>
+            <p className="text-gray-300 mt-2">{item.description}</p>
 
-            {/* Description */}
-            <p className="text-gray-300 mb-4">{item.description}</p>
-
-            {/* Tech Stack */}
-            <div className="flex flex-wrap gap-2 mb-4">
-              {item.tech.map((t) => (
-                <span key={t} className="bg-gray-800 px-3 py-1 rounded text-sm">
-                  {t}
-                </span>
-              ))}
-            </div>
-
-            {/* ---- 3 IMAGES ---- */}
-            <div className="grid md:grid-cols-3 gap-4 mb-6">
-              {item.images.map((img, idx) => (
-                <img
-                  key={idx}
-                  src={img}
-                  alt={`${item.title} screenshot ${idx + 1}`}
-                  className="w-full rounded-lg"
-                />
-              ))}
-            </div>
-
-            {/* ---- SCREEN RECORDING ---- */}
-            {item.videos && item.videos.length > 0 && (
-              <div className="mb-6">
-                <video controls className="w-full rounded-lg">
-                  <source src={item.videos[0]} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              </div>
-            )}
-
-            {/* ---- GITHUB LINK ---- */}
             <a
               href={item.github}
               target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block bg-blue-600 px-5 py-2 rounded text-white hover:bg-blue-700"
+              className="inline-block mt-4 text-blue-400 hover:underline"
             >
-              View on GitHub
+              View on GitHub →
             </a>
-
-          </div>
+          </motion.div>
         ))}
       </div>
+
+      {/* FULL-SCREEN IMAGE VIEWER */}
+      {selectedImage && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50"
+          onClick={() => setSelectedImage(null)}
+        >
+          <img
+            src={selectedImage}
+            className="max-w-[90%] max-h-[90%] rounded-lg shadow-lg"
+            alt="Enlarged view"
+          />
+        </div>
+      )}
     </section>
   );
 }
