@@ -43,5 +43,19 @@ export const projects = [
     ],
     videos: ["/projects/chatbot4.mp4"],
     github: "https://github.com/Nexloraa/AgenticAI-RAG-Chatbot"
-  }
+  } , 
+   {
+  id: 4,
+  title: "AI Real Estate Website (Demo)",
+  description:
+    "A modern real estate demo website built using AI-assisted development. Includes property listings, responsive UI, and clean design suitable for real estate agencies.",
+  tech: ["React", "AI-assisted UI", "Responsive Design"],
+  images: [
+    "/projects/site1.png",
+    "/projects/site2.png",
+    "/projects/site3.png"
+  ],
+  live: "https://ne-xlora-homes.vercel.app/" ,
+  github: "https://github.com/Nexloraa/NEXlora-homes"
+}
 ];
